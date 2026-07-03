@@ -11,7 +11,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	showInNavbar: true,
 
 	// 使用方式："meting" 使用 Meting API，"local" 使用本地音乐列表
-	mode: "meting",
+	mode: "local",
 
 	// 默认音量 (0-1)
 	volume: 0.7,
@@ -50,10 +50,27 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	local: {
 		playlist: [
 			{
-				name: "使一颗心免于哀伤",
-				artist: "知更鸟 / HOYO-MiX / Chevy",
-				url: "/assets/music/使一颗心免于哀伤-哼唱.mp3",
-				cover: "/assets/music/cover/109951169585655912.webp",
+				name: "渐冷",
+				artist: "雪二",
+				url: "/assets/music/qqmusic/雪二-渐冷.mp3",
+				lrc: "",
+			},
+			{
+				name: "离开我的依赖",
+				artist: "王艳薇",
+				url: "/assets/music/qqmusic/王艳薇-离开我的依赖.mp3",
+				lrc: "",
+			},
+			{
+				name: "去年夏天",
+				artist: "王大毛",
+				url: "/assets/music/qqmusic/王大毛-去年夏天.mp3",
+				lrc: "",
+			},
+			{
+				name: "镜踪",
+				artist: "刘增瞳",
+				url: "/assets/music/qqmusic/刘增瞳-镜踪.mp3",
 				lrc: "",
 			},
 		],

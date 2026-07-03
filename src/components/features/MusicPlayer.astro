@@ -131,6 +131,18 @@ const widgetId =
     </button>
 </div>
 
+<!-- Local Upload Row -->
+<div class="mt-2 px-1">
+    <label class="music-upload-trigger flex items-center justify-center gap-2 w-full px-3 py-2 rounded-lg bg-(--btn-regular-bg) hover:bg-(--btn-regular-bg-hover) text-(--btn-content) text-xs font-medium cursor-pointer transition-colors">
+        <Icon is:inline name="material-symbols:upload-file-outline-rounded" class="text-base" aria-hidden="true" />
+        <span>上传本地音乐试听</span>
+        <input class="music-upload-input sr-only" type="file" accept="audio/*" />
+    </label>
+    <p class="music-upload-hint mt-1 text-[10px] text-neutral-400 dark:text-neutral-500 leading-4">
+        部署音乐请放入 public/assets/music 并在 src/config/musicConfig.ts 登记。
+    </p>
+</div>
+
 <!-- Lyrics Drawer -->
 <div class="lrc-drawer grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] grid-rows-[0fr] opacity-0">
     <div class="overflow-hidden min-h-0">
@@ -225,6 +237,7 @@ const widgetId =
         btnDrawer: widget.querySelector('.btn-drawer-toggle'),
         playlistDrawer: widget.querySelector('.playlist-drawer'),
         playlistContainer: widget.querySelector('.playlist-container'),
+        uploadInput: widget.querySelector('.music-upload-input'),
         itemTemplate: document.getElementById('playlist-item-template-' + widgetId)
     };
 
@@ -234,6 +247,8 @@ const widgetId =
         ui.progressContainer, ui.btnNext, ui.btnPrev, ui.loading,
         ui.cover, ui.title, ui.artist, ui.playlistContainer, ui.itemTemplate];
     if (_critical.some(function(el) { return !el; })) return;
+
+    var localObjectUrl = null;
 
     // ── Local state (drawers, user scrolling, virtual scroll) ──
     var ITEM_H = 42;
@@ -687,6 +702,24 @@ const widgetId =
     });
 
     // ── Button click delegates ───────────────────────────────
+    if (ui.uploadInput) {
+        ui.uploadInput.addEventListener('change', function (event) {
+            var file = event.target.files && event.target.files[0];
+            if (!file) return;
+            if (localObjectUrl) URL.revokeObjectURL(localObjectUrl);
+            localObjectUrl = URL.createObjectURL(file);
+            var trackName = file.name.replace(/\.[^/.]+$/, '');
+            mgr.addTrack({
+                name: trackName,
+                artist: '本地上传',
+                url: localObjectUrl,
+                pic: '',
+                lrc: ''
+            }, true);
+            ui.uploadInput.value = '';
+        });
+    }
+
     ui.btnPlay.addEventListener('click', function () { mgr.togglePlay(); });
     ui.btnNext.addEventListener('click', function () { mgr.playNext(); });
     ui.btnPrev.addEventListener('click', function () { mgr.playPrev(); });
@@ -826,6 +859,7 @@ const widgetId =
                     });
                     observer.disconnect();
                     clearTimeout(local.scrollTimeout);
+                    if (localObjectUrl) URL.revokeObjectURL(localObjectUrl);
                     return;
                 }
             }

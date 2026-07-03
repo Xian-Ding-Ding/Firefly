@@ -1,0 +1,302 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getSortedPosts } from "@/utils/content-utils";
+import { getPostUrlBySlug } from "@/utils/url-utils";
+
+const posts = await getSortedPosts();
+const notePosts = posts.filter((post) => {
+	const haystack = [
+		post.data.title,
+		post.data.description,
+		post.data.category || "",
+		...(post.data.tags || []),
+	]
+		.join(" ")
+		.toLowerCase();
+	return [
+		"笔记",
+		"反应工程",
+		"vasp",
+		"计算化学",
+		"科研",
+		"reaction",
+	].some((keyword) => haystack.includes(keyword.toLowerCase()));
+});
+
+const categories = [
+	{
+		title: "反应工程",
+		icon: "material-symbols:article-outline",
+		description: "动力学、反应器、传递过程与工程计算整理。",
+		href: "/categories/反应工程/",
+	},
+	{
+		title: "VASP",
+		icon: "material-symbols:folder-outline",
+		description: "INCAR、KPOINTS、POTCAR、结构优化与常见报错。",
+		href: "/tags/VASP/",
+	},
+	{
+		title: "计算化学",
+		icon: "material-symbols:label-outline",
+		description: "DFT、表面吸附、能垒计算与数据处理流程。",
+		href: "/tags/计算化学/",
+	},
+];
+---
+
+<MainGridLayout title="学习库" description="Markdown 科研笔记、反应工程与 VASP 学习资料">
+	<section class="research-hero onload-animation">
+		<div>
+			<p class="research-eyebrow">Markdown Notes</p>
+			<h1>学习库</h1>
+			<p>
+				这里集中放你自己整理的 Markdown 笔记。把文件放到
+				<code>src/content/posts/notes/</code>
+				，并在 frontmatter 里写上分类或标签，页面会自动收录。
+			</p>
+		</div>
+		<div class="research-hero-stat">
+			<span>{notePosts.length}</span>
+			<strong>篇笔记</strong>
+		</div>
+	</section>
+
+	<section class="research-topic-grid onload-animation">
+		{categories.map((item) => (
+			<a class="research-topic-card" href={item.href}>
+				<Icon is:inline name={item.icon} />
+				<strong>{item.title}</strong>
+				<span>{item.description}</span>
+			</a>
+		))}
+	</section>
+
+	<section class="research-list onload-animation">
+		<div class="research-section-title">
+			<h2>最新笔记</h2>
+			<a href="/archive/">查看全部文章</a>
+		</div>
+		{notePosts.length > 0 ? (
+			<div class="research-note-list">
+				{notePosts.map((post) => (
+					<a class="research-note-item" href={getPostUrlBySlug(post.id)}>
+						<div>
+							<h3>{post.data.title}</h3>
+							<p>{post.data.description || "暂无摘要"}</p>
+						</div>
+						<div class="research-note-meta">
+							<span>{post.data.category || "未分类"}</span>
+							<time datetime={post.data.published.toISOString()}>
+								{post.data.published.toLocaleDateString("zh-CN")}
+							</time>
+						</div>
+					</a>
+				))}
+			</div>
+		) : (
+			<div class="research-empty">
+				还没有匹配到笔记。先把 Markdown 放进 <code>src/content/posts/notes/</code>。
+			</div>
+		)}
+	</section>
+</MainGridLayout>
+
+<style>
+	.research-hero,
+	.research-topic-card,
+	.research-list,
+	.research-empty {
+		border: 1px solid var(--line-color);
+		background:
+			linear-gradient(135deg, color-mix(in srgb, var(--primary) 9%, transparent), transparent 42%),
+			var(--card-bg);
+		border-radius: 0.75rem;
+	}
+
+	.research-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 1.5rem;
+		align-items: center;
+		padding: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.research-eyebrow {
+		margin: 0 0 0.5rem;
+		color: var(--btn-content);
+		font-weight: 700;
+		font-size: 0.8rem;
+	}
+
+	.research-hero h1 {
+		margin: 0;
+		font-size: 2rem;
+		line-height: 1.2;
+		color: var(--deep-text);
+	}
+
+	.research-hero p {
+		margin: 0.75rem 0 0;
+		color: var(--content-meta);
+		line-height: 1.8;
+	}
+
+	.research-hero code {
+		color: var(--btn-content);
+		background: var(--btn-regular-bg);
+		padding: 0.1rem 0.35rem;
+		border-radius: 0.35rem;
+	}
+
+	.research-hero-stat {
+		min-width: 7rem;
+		text-align: center;
+		padding: 1rem;
+		border-radius: 0.75rem;
+		background: var(--btn-regular-bg);
+		color: var(--btn-content);
+	}
+
+	.research-hero-stat span {
+		display: block;
+		font-size: 2.25rem;
+		font-weight: 800;
+		line-height: 1;
+	}
+
+	.research-hero-stat strong {
+		display: block;
+		margin-top: 0.35rem;
+		font-size: 0.85rem;
+	}
+
+	.research-topic-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.85rem;
+		margin-bottom: 1rem;
+	}
+
+	.research-topic-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+		padding: 1rem;
+		text-decoration: none;
+		color: inherit;
+		transition: transform 0.2s ease, border-color 0.2s ease;
+	}
+
+	.research-topic-card:hover {
+		transform: translateY(-2px);
+		border-color: color-mix(in srgb, var(--primary) 45%, var(--line-color));
+	}
+
+	.research-topic-card svg {
+		font-size: 1.75rem;
+		color: var(--btn-content);
+	}
+
+	.research-topic-card strong {
+		color: var(--deep-text);
+	}
+
+	.research-topic-card span {
+		color: var(--content-meta);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.research-list {
+		padding: 1.25rem;
+	}
+
+	.research-section-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.research-section-title h2 {
+		margin: 0;
+		font-size: 1.25rem;
+		color: var(--deep-text);
+	}
+
+	.research-section-title a {
+		color: var(--btn-content);
+		font-size: 0.9rem;
+		text-decoration: none;
+	}
+
+	.research-note-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.research-note-item {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 1rem;
+		padding: 1rem;
+		border-radius: 0.65rem;
+		background: color-mix(in srgb, var(--btn-regular-bg) 55%, transparent);
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.research-note-item h3 {
+		margin: 0;
+		color: var(--deep-text);
+		font-size: 1rem;
+	}
+
+	.research-note-item p {
+		margin: 0.4rem 0 0;
+		color: var(--content-meta);
+		font-size: 0.9rem;
+		line-height: 1.6;
+	}
+
+	.research-note-meta {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 0.35rem;
+		color: var(--content-meta);
+		font-size: 0.78rem;
+		white-space: nowrap;
+	}
+
+	.research-note-meta span {
+		color: var(--btn-content);
+		font-weight: 700;
+	}
+
+	.research-empty {
+		padding: 1rem;
+		color: var(--content-meta);
+		line-height: 1.7;
+	}
+
+	@media (max-width: 768px) {
+		.research-hero,
+		.research-note-item {
+			grid-template-columns: 1fr;
+		}
+
+		.research-topic-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.research-note-meta {
+			align-items: flex-start;
+		}
+	}
+</style>

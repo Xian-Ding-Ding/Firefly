@@ -18,10 +18,16 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 文章及其子菜单
 	links.push({
-		name: "文章",
+		name: "内容",
 		url: "#",
 		icon: "material-symbols:article",
 		children: [
+			// 学习库
+			LinkPresets.Notes,
+
+			// 视频讲解
+			LinkPresets.Videos,
+
 			// 归档
 			LinkPresets.Archive,
 
@@ -33,11 +39,16 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		],
 	});
 
-	// 友链
-	links.push(LinkPresets.Friends);
-
-	// 留言板
-	links.push(LinkPresets.Guestbook);
+	// 科研资源
+	links.push({
+		name: "资源",
+		url: "#",
+		icon: "material-symbols:science",
+		children: [
+			LinkPresets.Notes,
+			LinkPresets.Videos,
+		],
+	});
 
 	// 我的及其子菜单
 	links.push({
@@ -45,14 +56,11 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		url: "#",
 		icon: "material-symbols:person",
 		children: [
-			// 相册
-			LinkPresets.Gallery,
+			// 留言板
+			LinkPresets.Guestbook,
 
-			// 追番
-			LinkPresets.Anime,
-
-			// 番组计划
-			LinkPresets.Bangumi,
+			// 友链
+			LinkPresets.Friends,
 		],
 	});
 
@@ -79,27 +87,9 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			{
 				name: "GitHub",
-				url: "https://github.com/CuteLeaf/Firefly",
+				url: "https://github.com/Xian-Ding-Ding",
 				external: true,
 				icon: "fa7-brands:github",
-			},
-			{
-				name: "Gitee",
-				url: "https://gitee.com/CuteLeaf/Firefly",
-				external: true,
-				icon: "fa7-brands:gitee",
-			},
-			{
-				name: "QQ交流群",
-				url: "https://qm.qq.com/q/ZGsFa8qX2G",
-				external: true,
-				icon: "fa7-brands:qq",
-			},
-			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
-				external: true,
-				icon: "material-symbols:docs",
 			},
 		],
 	});
@@ -144,6 +134,16 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "标签",
 		url: "/tags/",
 		icon: "material-symbols:tag-rounded",
+	},
+	Notes: {
+		name: "学习库",
+		url: "/notes/",
+		icon: "material-symbols:menu-book-outline-rounded",
+	},
+	Videos: {
+		name: "视频讲解",
+		url: "/videos/",
+		icon: "material-symbols:play-circle-outline-rounded",
 	},
 	Friends: {
 		name: "友链",

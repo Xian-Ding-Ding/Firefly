@@ -61,6 +61,17 @@ declare global {
 			seek: (percent: number) => void;
 			seekToTime: (time: number) => void;
 			playTrackByIndex: (index: number) => void;
+			addTrack: (
+				track: {
+					name?: string;
+					artist?: string;
+					url: string;
+					pic?: string;
+					cover?: string;
+					lrc?: string;
+				},
+				autoPlay: boolean,
+			) => void;
 			loadTrack: (index: number, autoPlay: boolean) => void;
 		};
 	}

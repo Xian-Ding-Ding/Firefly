@@ -311,6 +311,28 @@ const managerConfigStr = JSON.stringify({
         }
     }
 
+    function addTrack(track, autoPlay) {
+        var normalized = {
+            name: track.name || '本地上传音乐',
+            artist: track.artist || '本地上传',
+            url: track.url,
+            pic: track.pic || track.cover || '',
+            lrc: track.lrc || ''
+        };
+        if (!normalized.url) return;
+        state.playlist.push(normalized);
+        if (!state.initialized) state.initialized = true;
+        emit('fm:init', {
+            playlist: state.playlist,
+            playMode: state.playMode,
+            volume: state.volume,
+            isMuted: state.isMuted
+        });
+        if (autoPlay) {
+            loadTrack(state.playlist.length - 1, true);
+        }
+    }
+
     // ── Audio events → broadcast ─────────────────────────────
     audio.addEventListener('timeupdate', function () {
         if (isNaN(audio.duration)) return;
@@ -438,6 +460,7 @@ const managerConfigStr = JSON.stringify({
         toggleMute: toggleMute,
         seek: seek,
         seekToTime: seekToTime,
+        addTrack: addTrack,
         playTrackByIndex: playTrackByIndex,
         loadTrack: loadTrack
     };

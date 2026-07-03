@@ -72,6 +72,27 @@ const todayText = i18n(I18nKey.today);
 
 const stats = [
 	{
+		icon: "material-symbols:group-outline-rounded",
+		label: "访客总数",
+		value: "加载中",
+		dynamic: true,
+		id: "busuanzi-site-uv",
+	},
+	{
+		icon: "material-symbols:visibility-outline-rounded",
+		label: "总浏览量",
+		value: "加载中",
+		dynamic: true,
+		id: "busuanzi-site-pv",
+	},
+	{
+		icon: "material-symbols:article-person-outline-rounded",
+		label: "本页浏览",
+		value: "加载中",
+		dynamic: true,
+		id: "busuanzi-page-pv",
+	},
+	{
 		icon: "material-symbols:article-outline",
 		label: i18n(I18nKey.siteStatsPostCount),
 		value: posts.length,
@@ -127,6 +148,7 @@ const stats = [
           <span 
             class="text-base font-bold text-neutral-900 dark:text-neutral-100"
             data-stat-id={stat.id}
+            id={stat.id}
           >
             {stat.formatted ? formatNumber(stat.value) : stat.value}
           </span>
@@ -142,7 +164,23 @@ const stats = [
 </WidgetLayout>
 
 <script is:inline define:vars={{ siteStartDate, lastPostDate, todayText }}>
+  function loadBusuanziStats() {
+    if (document.querySelector('script[data-firefly-busuanzi]')) return;
+    const script = document.createElement('script');
+    script.async = true;
+    script.dataset.fireflyBusuanzi = 'true';
+    script.src = 'https://vercount.one/js';
+    script.onerror = function () {
+      document.querySelectorAll('#busuanzi-site-uv, #busuanzi-site-pv, #busuanzi-page-pv').forEach((element) => {
+        if (element.textContent === '加载中') element.textContent = '--';
+      });
+    };
+    document.body.appendChild(script);
+  }
+
   function updateDynamicStats() {
+    loadBusuanziStats();
+
     const today = new Date();
 
     // 更新运行天数
