@@ -1,10 +1,12 @@
 ---
 import { sakuraConfig } from "@/config";
+import { url } from "@/utils/url-utils";
 
 const config = sakuraConfig;
+const sakuraImageUrl = url("/assets/images/effects/sakura.png");
 ---
 
-<script is:inline define:vars={{ sakuraConfig: config }}>
+<script is:inline define:vars={{ sakuraConfig: config, sakuraImageUrl }}>
 		let windowWidth = window.innerWidth;
 		let windowHeight = window.innerHeight;
 
@@ -175,7 +177,7 @@ const config = sakuraConfig;
 
 				// 创建图片对象
 				this.img = new Image();
-				this.img.src = '/assets/images/effects/sakura.png'; // 使用樱花图片
+				this.img.src = sakuraImageUrl; // 使用樱花图片
 
 				// 等待图片加载完成
 				await new Promise((resolve, reject) => {

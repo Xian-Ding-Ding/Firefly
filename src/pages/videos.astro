@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { url } from "@/utils/url-utils";
 
 const videoLessons = [
 	{
@@ -32,7 +33,7 @@ const videoLessons = [
 				<code>src/pages/videos.astro</code> 的 <code>videoLessons</code> 数组里登记。
 			</span>
 		</div>
-		<a href="/notes/">
+		<a href={url("/notes/")}>
 			<Icon is:inline name="material-symbols:menu-book-outline-rounded" />
 			配套笔记
 		</a>

@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { getSortedPosts } from "@/utils/content-utils";
+import { url } from "@/utils/url-utils";
 
 const posts = await getSortedPosts();
 const noteCount = posts.filter((post) => {
@@ -20,14 +21,14 @@ const cards = [
 		title: "Markdown 笔记",
 		value: `${noteCount} 篇`,
 		description: "反应工程、VASP、计算化学资料集中整理。",
-		href: "/notes/",
+		href: url("/notes/"),
 		icon: "material-symbols:menu-book-outline-rounded",
 	},
 	{
 		title: "视频讲解",
 		value: "课程模块",
 		description: "放置本地视频或 B 站嵌入，适合课程复盘。",
-		href: "/videos/",
+		href: url("/videos/"),
 		icon: "material-symbols:play-circle-outline-rounded",
 	},
 	{

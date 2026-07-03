@@ -57,6 +57,7 @@ interface Props {
 }
 
 const { config } = Astro.props;
+const homeUrl = url("/");
 
 // 构建模型配置
 const models = Array.isArray(config.model) ? config.model : [config.model];
@@ -100,6 +101,7 @@ function serializeMenus(menus: Props["config"]["menus"]) {
 	data-menus={JSON.stringify(serializeMenus(config.menus))}
 	data-tips={JSON.stringify(config.tips || {})}
 	data-responsive={JSON.stringify(config.responsive || {})}
+	data-home-url={homeUrl}
 >
 </div>
 
@@ -130,7 +132,10 @@ function serializeMenus(menus: Props["config"]["menus"]) {
 	// 菜单动作映射
 	let currentModelIndex = 0;
 	const menuActions: Record<string, (widget: any) => void> = {
-		home: () => (window.location.href = "/"),
+		home: () => {
+			const container = document.getElementById("l2d-widget-container");
+			window.location.href = container?.dataset.homeUrl || "/";
+		},
 		scrollToTop: () => window.scrollTo({ top: 0, behavior: "smooth" }),
 		sleep: (widget) => widget.sleep(),
 		github: () => window.open("https://github.com/CuteLeaf/Firefly", "_blank"),

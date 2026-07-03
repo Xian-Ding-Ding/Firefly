@@ -52,11 +52,28 @@ const adapter = process.env.CF_WORKERS
 		})
 	: undefined;
 
+const githubRepository = process.env.GITHUB_REPOSITORY || "";
+const githubRepositoryOwner = process.env.GITHUB_REPOSITORY_OWNER || githubRepository.split("/")[0];
+const githubRepositoryName = githubRepository.split("/")[1] || "";
+const isGitHubPagesBuild = Boolean(process.env.GITHUB_ACTIONS && githubRepositoryName);
+const isUserPagesRepository = githubRepositoryName.endsWith(".github.io");
+const deployBase = process.env.PUBLIC_BASE_PATH
+	? process.env.PUBLIC_BASE_PATH
+	: isGitHubPagesBuild && !isUserPagesRepository
+		? `/${githubRepositoryName}`
+		: "/";
+const normalizedDeployBase = deployBase.endsWith("/") ? deployBase : `${deployBase}/`;
+const deploySite = process.env.PUBLIC_SITE_URL
+	? process.env.PUBLIC_SITE_URL
+	: isGitHubPagesBuild
+		? `https://${githubRepositoryOwner}.github.io${isUserPagesRepository ? "" : normalizedDeployBase.slice(0, -1)}`
+		: siteConfig.site_url;
+
 // https://astro.build/config
 export default defineConfig({
-	site: siteConfig.site_url,
+	site: deploySite,
 
-	base: "/",
+	base: normalizedDeployBase,
 	trailingSlash: "always",
 
 	// 字体配置 - 只加载实际使用的字体，跳过未引用的以加快构建
@@ -323,4 +340,3 @@ export default defineConfig({
 		},
 	},
 });
-

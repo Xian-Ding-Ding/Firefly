@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getSortedPosts } from "@/utils/content-utils";
-import { getPostUrlBySlug } from "@/utils/url-utils";
+import { getPostUrlBySlug, url } from "@/utils/url-utils";
 
 const posts = await getSortedPosts();
 const notePosts = posts.filter((post) => {
@@ -29,19 +29,19 @@ const categories = [
 		title: "反应工程",
 		icon: "material-symbols:article-outline",
 		description: "动力学、反应器、传递过程与工程计算整理。",
-		href: "/categories/反应工程/",
+		href: url("/archive/?category=反应工程"),
 	},
 	{
 		title: "VASP",
 		icon: "material-symbols:folder-outline",
 		description: "INCAR、KPOINTS、POTCAR、结构优化与常见报错。",
-		href: "/tags/VASP/",
+		href: url("/archive/?tag=VASP"),
 	},
 	{
 		title: "计算化学",
 		icon: "material-symbols:label-outline",
 		description: "DFT、表面吸附、能垒计算与数据处理流程。",
-		href: "/tags/计算化学/",
+		href: url("/archive/?tag=计算化学"),
 	},
 ];
 ---
@@ -76,7 +76,7 @@ const categories = [
 	<section class="research-list onload-animation">
 		<div class="research-section-title">
 			<h2>最新笔记</h2>
-			<a href="/archive/">查看全部文章</a>
+			<a href={url("/archive/")}>查看全部文章</a>
 		</div>
 		{notePosts.length > 0 ? (
 			<div class="research-note-list">

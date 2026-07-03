@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "反应工程、VASP 与计算化学学习库",
 
 	// 站点 URL
-	site_url: "https://firefly.cuteleaf.cn",
+	site_url: "https://xian-ding-ding.github.io/Firefly-D",
 
 	// 站点描述
 	description:
