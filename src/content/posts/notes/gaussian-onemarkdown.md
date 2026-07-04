@@ -1,5 +1,5 @@
 ---
-title: Gaussian 与 Gaussian View 计算笔记
+title: Gaussian计算笔记
 published: 2026-07-03
 description: "从 OneMarkdown 同步的 Gaussian View、Gaussian 16W、溶剂化自由能与过渡态搜索笔记。"
 tags: ["Gaussian", "计算化学", "科研笔记", "OneMarkdown"]

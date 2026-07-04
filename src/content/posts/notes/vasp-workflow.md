@@ -1,5 +1,5 @@
 ---
-title: VASP 笔记：结构优化计算流程
+title: VASP计算流程
 published: 2026-07-03
 description: "从输入文件准备、结构优化到结果检查的 VASP 计算流程模板。"
 tags: ["VASP", "计算化学", "科研笔记"]

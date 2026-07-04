@@ -72,7 +72,8 @@ function filterLinks(link: NavBarLink): NavBarLink | null {
 	const filteredChildren = link.children.filter(isPageEnabled);
 
 	if (filteredChildren.length === 0) return null;
-	if (link.name === "链接") return { ...link, children: filteredChildren };
+	if (link.name === "链接" || link.name === "关于")
+		return { ...link, children: filteredChildren };
 	if (filteredChildren.length === 1) return filteredChildren[0];
 	return { ...link, children: filteredChildren };
 }

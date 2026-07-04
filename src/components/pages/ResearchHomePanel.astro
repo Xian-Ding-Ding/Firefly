@@ -11,7 +11,7 @@ const noteCount = posts.filter((post) => {
 		post.data.category || "",
 		...(post.data.tags || []),
 	].join(" ");
-	return ["笔记", "反应工程", "VASP", "计算化学"].some((keyword) =>
+	return ["笔记", "VASP", "Gaussian", "计算化学"].some((keyword) =>
 		text.includes(keyword),
 	);
 }).length;
@@ -20,7 +20,7 @@ const cards = [
 	{
 		title: "Markdown 笔记",
 		value: `${noteCount} 篇`,
-		description: "反应工程、VASP、计算化学资料集中整理。",
+		description: "VASP、Gaussian、计算化学资料集中整理。",
 		href: url("/notes/"),
 		icon: "material-symbols:menu-book-outline-rounded",
 	},

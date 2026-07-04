@@ -1,5 +1,5 @@
 ---
-title: VASP 结构计算笔记
+title: VASP计算笔记
 published: 2026-07-03
 description: "从 OneMarkdown 同步的 VASP 结构优化、输入文件、运行与后处理笔记。"
 tags: ["VASP", "计算化学", "科研笔记", "OneMarkdown"]
@@ -14,7 +14,7 @@ draft: false
   <span>结构优化 → 静态自洽 → 非自洽 DOS/能带 → 电荷分析/吸附能/过渡态。</span>
 </div>
 
-## 1.准备四个输入文件：<u>POSCAR</u>、<u>INCAR</u>、<u>KPOINTS</u>、<u>POTCAR</u>
+## 1.准备四个输入文件：POSCAR、INCAR、KPOINTS、POTCAR
 
 <div class="file-grid">
   <span><b>POSCAR</b><small>结构与晶胞</small></span>
