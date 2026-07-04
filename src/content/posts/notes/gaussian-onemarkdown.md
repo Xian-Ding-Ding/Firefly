@@ -25,11 +25,11 @@ calculate => 第一个(Gaussian Calculation set up) or Ctrl+G
   <table>
     <tbody>
       <tr><th>项目</th><th>推荐设置</th></tr>
-      <tr><td><strong>Job type</strong></td><td><u>Opt+Freq</u> 或 Energy（单点能需在结构优化后进行）</td></tr>
+      <tr><td><strong>Job type</strong></td><td><u>Opt+Freq</u> 或 Energy（单点能,一定要在结构优化后才能计算,打开结构优化后的 out/log 文件）</td></tr>
       <tr><td><strong>Method</strong></td><td>DFT；泛函可用 <strong>B3LYP</strong></td></tr>
       <tr><td><strong>Basis set</strong></td><td><strong>6-311++G(d,p)</strong></td></tr>
-      <tr><td><strong>Link0</strong></td><td>Memory limit、shared processors、chk File</td></tr>
-      <tr><td><strong>General</strong></td><td>勾选 Additional Print，不勾 Write connectivity</td></tr>
+      <tr><td><strong>Link0</strong></td><td>Memory limit（计算分配内存）、shared processors（分配核数）、chk File（生成 chk 文件,死机也还在）</td></tr>
+      <tr><td><strong>General</strong></td><td>勾选 Additional Print（迭代信息），不勾 Write connectivity</td></tr>
     </tbody>
   </table>
 </div>
@@ -270,7 +270,7 @@ save Temp Files
 
 1. 打开 Gaussian 16W。
 2. `utilities` => `formchk`。
-3. 选择计算完后的单点能 `.chk` 文件。
+3. 选择计算完后的单点能.chk 文件。
 4. 打开并查看已经绘制完成的结果。
 5. 关闭后会多出来一个 `.fch` 文件。
 6. 打开 fch 文件查看 HOMO、LUMO 轨道(上 lumo,下 homo)。
@@ -391,7 +391,7 @@ source IGM_inter.vmd
 6. 输入 `200,200`(格点数),或直接回车使用默认值。
 7. 选择平面。
 8. 输入 `0`(Z=0,平面)或 `0.5`(Z轴范围)。
-9. `return` => `-6`(txt文件) => `0`(图片)。
+9. `return` => `-6`(txt文件) => `0`(图片)。PDF 原始记法: `return => -6(txt文件) => 0(图片)`。
 
 <div class="method-list">
   <p><strong>XY：</strong>平面 1</p>
