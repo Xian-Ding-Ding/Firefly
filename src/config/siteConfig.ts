@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "",
 
 	// 站点 URL
-	site_url: "https://xian-ding-ding.github.io/Firefly-D",
+	site_url: "https://chemdream.top",
 
 	// 站点描述
 	description:
